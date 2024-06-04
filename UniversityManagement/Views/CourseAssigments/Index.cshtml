@@ -1,0 +1,71 @@
+﻿@using UniversityManagement.ViewModels
+@model IEnumerable<CourseAssigmentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Course Assigments <i class="fa-solid fa-person-chalkboard"></i></h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create
+        <i class="fa-solid fa-plus"></i>
+    </a>
+</p>
+<form asp-controller="CourseAssigments" asp-action="Index">
+    <p>
+        <select asp-items="@ViewBag.Instructors" name="InstructorId">
+            <option value="">All</option>
+        </select>
+        <select asp-items="@ViewBag.Courses" name="CourseId">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Search" class="search-submit" />
+    </p>
+    <div class="input-group mb-3">
+        <input placeholder="search..." type="text" name="SearchString" value="@ViewBag.Search" />
+        <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+              <a asp-action="Index" asp-route-sortOrder="@ViewData["RoomSort"]">
+                    @Html.DisplayNameFor(model => model.Room)
+              </a>
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    <a class="btn btn-primary mx-3" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
